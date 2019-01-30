@@ -2,7 +2,7 @@ require 'test_helper'
 
 class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   
-#静的なページのテスト
+#静的なページの単体テスト
   test "should get home" do                                                     #root_path(/)にgetアクセスでページがきちんと表示され、
     get root_path                                                               #titleもきちんとKohei's blogと表示されるか
     assert_response :success
