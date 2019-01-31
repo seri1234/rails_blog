@@ -26,6 +26,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     follow_redirect!                                                            #postリクエストの結果を見て実際にユーザー情報ページにリダイレクト
     assert_template 'users/show'                                                #showがきちんと描画されているか
     assert_not flash.empty?                                                     #成功フラッシュあるか
-
+    assert is_logged_in?                                                        #ログインされているか？test_hrlperのis_logged_in?メソッド
   end
 end

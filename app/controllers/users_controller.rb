@@ -10,9 +10,10 @@ class UsersController < ApplicationController
   end
   
   
-  def create                                                                    #/signup（users_path）にアクセス、フォームのユーザー情報をDBに保存
+  def create                                                                    #/signup（users_path）にpostアクセス、フォームのユーザー情報をDBに保存
   @user = User.new(user_params)                                                 #user_paramsよりparams@userを作成
     if @user.save                                                               #もし成功すればsaveしてデータベースに保存
+      log_in @user
       flash[:success] = "Welcome to Kohei's blog!"                              #成功フラッシュ
       redirect_to @user                                                         #user_url(@user)にリダイレクト(/users/id)、プロフィールページを表示。
     else                                                                        #もし失敗なら
