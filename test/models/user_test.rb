@@ -67,5 +67,8 @@ class UserTest < ActiveSupport::TestCase
     @user.password = @user.password_confirmation = "a" * 5                      #aを５個セット
     assert_not @user.valid?                                                     #きちんとfalseになるか
   end
-
+                                                                                #2種類のブラウザの片方だけログアウトして、remember_digestに値がない状況でもう片方を再起動した時したときのバグをシュミレート
+  test "authenticated? should return false for a user with nil digest" do       #current_userメソッドの if user && user.authenticated?(cookies[:remember_token])の部分でエラーが出てしまうバグを検証
+    assert_not @user.authenticated?('')                                         #user.authenticated?でnilが帰ってくるかどうか
+  end                                                                           #authenticated?メソッドのreturn false if remember_digest.nil?の部分だけをテストするので、引数は(' ')空で構わない
 end
