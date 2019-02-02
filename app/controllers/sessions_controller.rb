@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])                   #もし該当ユーザーがいて、authenticateメソッドの判定機能でパスワードとも一致したら
       log_in user                                                               #userとしてログイン。sessions_helperのlog_inメソッドを使用
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)     #もしparams[:session][:remember_me]の値が1（つまりチェックボックスがオン）ならユーザーのログインを永続化し、0なら永続的セッションを破棄する。sessions_helperのrememberメソッド
-      redirect_to user                                                          #/users/idにリダイレクト
+      redirect_back_or user                                                     #フレンドリーフォワーディング機能のURLか/users/idにリダイレクト
     else
       flash.now[:danger] = 'Invalid email/password combination'                 #もし該当ユーザがいないか、パスワードが正しくなければ、失敗flashをこのページで表示
       render 'new'                                                              #newを再描画

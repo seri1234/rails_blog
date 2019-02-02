@@ -6,9 +6,11 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                       format: { with: VALID_EMAIL_REGEX },                      #メールアドレスの正しいフォーマットのバリデーション
                       uniqueness: { case_sensitive: false }                     #アドレスは重複してはいけない（大文字小文字を区別しない）
-  has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
-  
+  has_secure_password                                                           #has_secure_passwordが提供するauthenticateメソッドを使えるようにある                                                           
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true  #allow_nil:trueでパスワードの値が空だったらこの行のバリデーションをスキップ。
+                                                                                #ユーザー情報更新画面でパスワード欄が空でもバリデーションエラーで引っかからないようにする
+                                                                                #has_secure_passwordに存在性をチェックする機能があるので、新規作成時の時に空だときちんとエラーが出る。
+                                                                                #また、presence:trueがないと、"   "のような空文字で通ってしまう。
   # 渡された文字列を暗号化して値を返す
   def User.digest(string)                                                       #テスト用fixtureのpassword_digest作成に使う
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

@@ -11,6 +11,10 @@ module SessionsHelper
     cookies.permanent[:remember_token] = user.remember_token                    #cookiesのremember_token２０年使えるuser.remember_token を入れる。user.rbのattr_accessor :remember_token を使う。
   end
   
+  # 渡されたユーザーがログイン済みユーザーであればtrueを返す
+  def current_user?(user)                                                       #users_controllerのcorrect_userメソッドで使用
+    user == current_user                                                        #渡されたユーザーと現在のユーザーが同じならtrueを返す。
+  end
   
   # 記憶トークンcookieに対応するユーザーを返す                                   まずsession[:user_id]（一時クッキー）を調べ、値があればそのユーザーを@currentを返す。
                                                                                 #もし無ければ、cookies.signed[:user_id](永続的クッキー)を調べ、
@@ -47,5 +51,16 @@ module SessionsHelper
     forget(current_user)                                                        #上のfogetメソッドを実行して、永続的クッキーを削除
     session.delete(:user_id)                                                    #sessionのユーザーidを消してログアウト準備
     @current_user = nil                                                         #@current_userにnilを返す
+  end
+  
+  # 記憶したURL (もしくはデフォルト値) にリダイレクト
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)                            #
+    session.delete(:forwarding_url)                                             #実際のリダイレクトは最後に実行されるので、この行は実行される
+  end
+
+  # アクセスしようとしたURLを覚えておく
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?             #もしgetリクエストなら、session[:forwarding_url]にリクエストを保存しておく
   end
 end
