@@ -71,4 +71,12 @@ class UserTest < ActiveSupport::TestCase
   test "authenticated? should return false for a user with nil digest" do       #current_userメソッドの if user && user.authenticated?(cookies[:remember_token])の部分でエラーが出てしまうバグを検証
     assert_not @user.authenticated?('')                                         #user.authenticated?でnilが帰ってくるかどうか
   end                                                                           #authenticated?メソッドのreturn false if remember_digest.nil?の部分だけをテストするので、引数は(' ')空で構わない
+
+  test "associated posts should be destroyed" do                                #Userモデルと関連されたpostはきちんと削除されるかのテスト
+    @user.save
+    @user.posts.create!(title: "test", content: "Lorem ipsum")                   #Postにデータを追加
+    assert_difference 'Post.count', -1 do                                       #以下のことをするとPostのデータが1つ減るか
+      @user.destroy                                                             #ユーザーデータを削除
+    end
+  end
 end

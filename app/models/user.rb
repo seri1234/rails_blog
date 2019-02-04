@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :posts, dependent: :destroy
   attr_accessor :remember_token                                                 #直接DB上に平文のtokenを置くのは危険なので、仮想のremember_token属性を作る
   before_save { self.email = email.downcase }                                   #save直前にemailを小文字に変換する
   validates :name,  presence: true, length: { maximum: 50 }
@@ -40,6 +41,12 @@ class User < ApplicationRecord
   # ユーザーのログイン情報を破棄する
   def forget
     update_attribute(:remember_digest, nil)                                     #remember_degestをnilにする
+  end
+  
+  # 試作feedの定義
+  # 完全な実装は次章の「ユーザーをフォローする」を参照
+  def feed                                                                      #static_pages_controller.rbのhomeアクションで使用。homeページの記事表示に使う
+    Post.where("user_id = ?", id)
   end
   
 end

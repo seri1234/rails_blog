@@ -195,3 +195,41 @@ input {
     border-bottom: 1px solid $gray-lighter;
   }
 }
+
+/* posts */
+
+.card {
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  color: #000000;
+  background: #f0f0f0;
+  border-bottom: solid 6px #aac5de;
+  border-radius: 9px;
+  
+  .card header{
+    margin-top:5em;
+    padding-top:0;
+  }
+
+  .card-text {
+    display: block;
+
+    img {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  
+  .card-footer {
+    color: $gray-light;
+    display: block;
+    margin-left: 60px;
+  }
+}
+
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+}

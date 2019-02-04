@@ -1,0 +1,15 @@
+<div class="card">
+	<h5 class="card-header">タイトル: <%= link_to post.title, post_path(post.id) %></h5>
+	<div class="card-body">
+		<p class="card-text">本文 : <%= simple_format( post.content.truncate(50))%>
+		<%= image_tag post.picture.url if post.picture? %>
+		<%= link_to "続きを読む", post_path(post.id) %></p>
+	</div>
+	<div class="card-footer">
+	  投稿者<%= link_to post.user.name, user_path(post.user.id) %>  - 投稿日時<%= simple_time(post.created_at) %>
+	  <% if current_user?(post.user) %>
+      <%= link_to "削除", post, method: :delete,
+                                       data: { confirm: "You sure?" } %>
+    <% end %>
+	</div>
+</div>

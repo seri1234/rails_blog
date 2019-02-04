@@ -11,6 +11,8 @@ Rails.application.routes.draw do
                                                                                 #edit_users_path  GET    /users/:id/edit users#edit     ユーザー情報更新ページを表示
                                                                                 #user_path(user)  GET    /users/:id      users#show     ユーザープロフィールページを表示
                                                                                 #user_path(user)  PATCH  /users/:id      users#update   ユーザー情報を更新して保存
-                                                                                # user_path(user) DELETE /users/:id      users#destroy  ユーザー情報を削除
-  
+                                                                                #user_path(user) DELETE /users/:id      users#destroy  ユーザー情報を削除
+  resources :posts,          only: [:show,:create, :destroy]                    #/posts/id (post_path(post_id))にgetアクセスでshowアクションを実行。記事詳細画面を表示
+                                                                                #/posts(posts_path)にpostアクセスでcreatアクションを実行。記事を投稿する。
+                                                                                #/posts/id (post_path(post_id))にdeleteアクセスでdestroyアクションを実行。記事を削除する
 end

@@ -10,8 +10,8 @@ class UsersController < ApplicationController
 
 
   def show                                                                      #/users/id user_path(user)にgetアクセス。ユーザープロフィールページを表示
-   @user = User.find(params[:id])
-
+    @user = User.find(params[:id])
+    @posts = @user.posts.paginate(page: params[:page])
   end
   
   def new
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     flash[:success] = "User deleted"
     redirect_to users_url                                                       #ユーザ一覧にアクセス
   end
-
+  
 
   private                                                                       #外部から使えないようにする
 
@@ -58,18 +58,9 @@ class UsersController < ApplicationController
                                    :password_confirmation)
     end
 
-    # beforeアクション
+    # beforeフィルター
 
-    # ログイン済みユーザーかどうか確認
-    def logged_in_user
-      unless logged_in?                                                         #logged_in?がfalseの場合
-        store_location
-        flash[:danger] = "Please log in."                                       #失敗フラッシュを表示
-        redirect_to login_url                                                   #ログインページへ
-      end
-    end
-    
-        # 正しいユーザーかどうか確認
+    # 正しいユーザーかどうか確認
     def correct_user
       @user = User.find(params[:id])                                            #URLに含まれている情報からparams[:id]のユーザー情報を取得
       redirect_to(root_url) unless current_user?(@user)                        #アクセスしたページのユーザーと、current_userが同じでなければルートページにリダイレクト
