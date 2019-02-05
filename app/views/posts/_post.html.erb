@@ -1,7 +1,7 @@
 <div class="card">
 	<h5 class="card-header">タイトル: <%= link_to post.title, post_path(post.id) %></h5>
 	<div class="card-body">
-		<p class="card-text">本文 : <%= simple_format(post.content.truncate(50 , :omission => "..."))%>
+		<p class="card-text">本文 : <%= simple_format(post.content.truncate(50))%>
 		<%= image_tag post.picture.url if post.picture? %>
 		<%= link_to "続きを読む", post_path(post.id) %></p>
 	</div>

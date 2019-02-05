@@ -1,26 +1,28 @@
-<% if logged_in? %>
+<div class="center jumbotron">
+  <h1>Kohei's blog</h1>
+    <h2>
+      Koheiの記事投稿サービスにようこそ！
+    </h2>
+</div>
+<div class="container-fluid">
+<% if logged_in? %>  
   <div class="row">
-    <aside class="col-md-4">
+    <aside class="col-md">
       <section class="user_info">
         <%= render 'shared/user_info' %>
       </section>
       <section class="post_form">
-        <%= render 'shared/post_form' %>
+          <%= render 'shared/post_form' %>
       </section>
     </aside>
-    <div class="col-md-8">
+<% else %>
+  <div class="col-md">
+    <%= link_to "ユーザー登録",  signup_path, class: "btn btn-lg btn-primary center-block" %> 
+  </div>
+<% end %>
+  <div class="col-md">
       <h3>記事一覧</h3>
       <%= render 'shared/feed' %>
     </div>
   </div>
-<% else %>
-  <div class="center jumbotron">
-    <h1>Kohei's blog</h1>
-
-    <h2>
-      This is the home page  Kohei's blog
-    </h2>
-
-    <%= link_to "Sign up now!",  signup_path, class: "btn btn-lg btn-primary" %>
-  </div>
-<% end %>
+</div>

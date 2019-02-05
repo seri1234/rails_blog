@@ -43,10 +43,4 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)                                     #remember_degestをnilにする
   end
   
-  # 試作feedの定義
-  # 完全な実装は次章の「ユーザーをフォローする」を参照
-  def feed                                                                      #static_pages_controller.rbのhomeアクションで使用。homeページの記事表示に使う
-    Post.where("user_id = ?", id)
-  end
-  
 end

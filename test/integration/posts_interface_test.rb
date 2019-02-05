@@ -34,7 +34,7 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
     
     
     # 記事詳細表示機能
-    get post_path(Post.first)                                                  #/posts最新の投稿の
+    get post_path(Post.first)                                                  #/posts/Post.firstにgetアクセス。最新の投稿の記事詳細ページ。
     assert_select 'title', full_title(title)                                    #titleが投稿された記事のタイトルになっているか
     assert_match title, response.body                                           #html内に投稿されたタイトルがあるか
     assert_match Post.first.content, response.body                              #html内に投稿された本文が省略されていない形で存在するか
