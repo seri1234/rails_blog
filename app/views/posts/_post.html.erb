@@ -6,6 +6,7 @@
 		<%= link_to "続きを読む", post_path(post.id) %></p>
 	</div>
 	<div class="card-footer">
+	  <%= image_tag post.user.picture.url,:size =>'30x30' if post.user.picture? %>
 	  投稿者<%= link_to post.user.name, user_path(post.user.id) %>  - 投稿日時<%= simple_time(post.created_at) %>
 	  <% if current_user?(post.user) %>
       <%= link_to "削除", post, method: :delete,

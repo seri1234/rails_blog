@@ -16,13 +16,17 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   end
   
   test "valid signup information" do                                            #有効な新規ユーザ登録情報のテスト
-    get signup_path                                                             #新規登録ページ/signupにgetアクセ
+    get signup_path                                                             #新規登録ページ/signupにgetアクセス
+    assert_select 'input[type="file"]'                                          #'input[type="file"]'が含まれているか（画像アップロード部分
+    picture = fixture_file_upload('test/fixtures/rails.png', 'image/png')       #テスト用の画像を用意
     assert_difference 'User.count', 1 do                                        #以下のことをするとUserモデルのデータ数1増えるか
       post users_path, params: { user: { name:  "Example User",
                                          email: "user@example.com",
                                          password:              "password",
-                                         password_confirmation: "password" } }  #/usersに有効なフォーム内容でpostアクセス
+                                         password_confirmation: "password",
+                                         picture: picture } }                   #/usersに有効なフォーム内容でpostアクセス
     end
+    assert assigns(:user).picture?  
     follow_redirect!                                                            #postリクエストの結果を見て実際にユーザー情報ページにリダイレクト
     assert_template 'users/show'                                                #showがきちんと描画されているか
     assert_not flash.empty?                                                     #成功フラッシュあるか

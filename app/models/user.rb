@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   attr_accessor :remember_token                                                 #直接DB上に平文のtokenを置くのは危険なので、仮想のremember_token属性を作る
   before_save { self.email = email.downcase }                                   #save直前にemailを小文字に変換する
+  mount_uploader :picture, PictureUploader                                      #ユーザー情報として画像を紐付け
   validates :name,  presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i        #メールアドレスの正しいフォーマットの正規表現
   validates :email, presence: true, length: { maximum: 255 },
@@ -9,7 +10,7 @@ class User < ApplicationRecord
                       uniqueness: { case_sensitive: false }                     #アドレスは重複してはいけない（大文字小文字を区別しない）
   has_secure_password                                                           #has_secure_passwordが提供するauthenticateメソッドを使えるようにある                                                           
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true  #allow_nil:trueでパスワードの値が空だったらこの行のバリデーションをスキップ。
-                                                                                #ユーザー情報更新画面でパスワード欄が空でもバリデーションエラーで引っかからないようにする
+  validate  :picture_size                                                       #ユーザー情報更新画面でパスワード欄が空でもバリデーションエラーで引っかからないようにする
                                                                                 #has_secure_passwordに存在性をチェックする機能があるので、新規作成時の時に空だときちんとエラーが出る。
                                                                                 #また、presence:trueがないと、"   "のような空文字で通ってしまう。
   # 渡された文字列を暗号化して値を返す
@@ -43,4 +44,13 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)                                     #remember_degestをnilにする
   end
   
+
+    private
+
+    # アップロードされた画像のサイズをバリデーションする
+    def picture_size
+      if picture.size > 5.megabytes                                             #5MB以上の場合はエラー
+        errors.add(:picture, "should be less than 5MB")
+      end
+    end
 end

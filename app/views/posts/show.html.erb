@@ -6,6 +6,7 @@
 		<%= image_tag @post.picture.url if @post.picture? %></p>
 	</div>
 	<div class="card-footer">
+		<%= image_tag @post.user.picture.url,:size =>'30x30' if @post.user.picture? %>
 	  投稿者<%= link_to @post.user.name, user_path(@post.user.id) %>  - 投稿日時<%= simple_time(@post.created_at) %>
 	</div>
 </div>

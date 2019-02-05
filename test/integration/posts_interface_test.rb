@@ -20,13 +20,13 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
     # 有効な送信
     title = "title test"
     content = "a" * 30 + "b" * 30                                               #有効なテスト用タイトルと、本文、
-    picture = fixture_file_upload('test/fixtures/rails.png', 'image/png')       #テスト用の画像を作成
+    picture = fixture_file_upload('test/fixtures/rails.png', 'image/png')       #テスト用の画像を用意
     assert_difference 'Post.count', 1 do                                        #以下のことをするとPostモデルにデータが１つ増えるか
       post posts_path, params: { post: {  title: title ,
                                           content: content,
                                           picture: picture } }                  #有効な情報をpostアクセスでposts_pathに送信する
     end
-    assert_redirected_to root_url                                               #ルートページにリダイレクトされるか
+    assert assigns(:post).picture?                                              #current_user.posts.pictureの中身があるか。assignでcreateの@postにアクセスできる
     follow_redirect!                                                            #リダイレクトを反映
     assert_match title, response.body                                           #html内に投稿されたタイトルがあるか
     assert_select "a[href=?]",post_path(Post.first), count: 3                   #投稿された記事の記事詳細ページへのリンク2つと、削除ページが存在するか

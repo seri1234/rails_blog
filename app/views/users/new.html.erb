@@ -18,7 +18,13 @@
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
 
+      <span class="picture">
+        <%= f.label :picture %>
+        <%= f.file_field :picture %>
+      </span>
+      
       <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
+<%= render 'shared/picture_size' %>

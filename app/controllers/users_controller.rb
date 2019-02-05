@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     #Strong Parameters
     def user_params                                                             #paramsの戻り値をuser属性のname, 
       params.require(:user).permit(:name, :email, :password,                    #:email, :password, :password_confirmationのみ許可する
-                                   :password_confirmation)
+                                   :password_confirmation,:picture)
     end
 
     # beforeフィルター

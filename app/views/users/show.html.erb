@@ -3,6 +3,7 @@
   <aside calss = "col-md-4">
       <section class="user_info">
         <h1>
+          <%= image_tag @user.picture.url,:size =>'150x150' if @user.picture? %>
           <%= @user.name %>
         </h1>
   </section>
