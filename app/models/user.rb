@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :posts, dependent: :destroy
+  has_many :comments,dependent: :destroy
   attr_accessor :remember_token                                                 #直接DB上に平文のtokenを置くのは危険なので、仮想のremember_token属性を作る
   before_save { self.email = email.downcase }                                   #save直前にemailを小文字に変換する
   mount_uploader :picture, PictureUploader                                      #ユーザー情報として画像を紐付け

@@ -4,6 +4,8 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @comments = @post.comments                                                  #コメント表示用@comments
+    @comment = Comment.new                                                      #コメント投稿用@comment
   end
 
   def create                                                                    #/posts(posts_path)にpostアクセス。記事を投稿

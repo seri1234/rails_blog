@@ -34,10 +34,20 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
     
     
     # 記事詳細表示機能
-    get post_path(Post.first)                                                  #/posts/Post.firstにgetアクセス。最新の投稿の記事詳細ページ。
+    get post_path(Post.first.id)                                           #/posts/Post.firstにgetアクセス。最新の投稿の記事詳細ページ。
     assert_select 'title', full_title(title)                                    #titleが投稿された記事のタイトルになっているか
     assert_match title, response.body                                           #html内に投稿されたタイトルがあるか
     assert_match Post.first.content, response.body                              #html内に投稿された本文が省略されていない形で存在するか
+    #コメント投稿機能
+    post post_comments_path(Post.first.id) ,params: { post_id: Post.first.id,
+                                                      user_id: @user.id,
+                                                      comment: { content: "Lorem ipsum" } }
+    assert_not flash.empty?
+    get post_path(Post.first.id)   
+    assert "コメント一覧"
+    assert_match "Lorem ipsum" , response.body
+    assert_select  'a', text: @user.name, count: 2 
+
     
     # 投稿を削除する
     get root_path 
