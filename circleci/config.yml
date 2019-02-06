@@ -29,8 +29,8 @@ jobs:
 
       # Which version of bundler?
       - run:
-          name: bundler 1.16.6
-          command: bundle -v
+          name: Which bundler?
+          command: gem install bundler -v 1.16.6
 
 
       - run:
