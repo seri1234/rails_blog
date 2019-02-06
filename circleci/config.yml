@@ -19,6 +19,12 @@ jobs:
     steps:
       - checkout
 
+          # Which version of bundler?
+      - run:
+          name: bundler 1.16.6?
+          command: bundle -v
+
+
       # Download and cache dependencies
       - restore_cache:
           keys:
