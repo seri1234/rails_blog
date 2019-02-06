@@ -22,7 +22,7 @@ jobs:
           # Which version of bundler?
       - run:
           name: bundler 1.16.6
-          command: bundle -v
+          command: bundler　install -v
 
 
       # Download and cache dependencies
