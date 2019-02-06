@@ -19,10 +19,9 @@ jobs:
     steps:
       - checkout
 
-          # Which version of bundler?
-      - run:
-          name: bundler 1.16.6
-          command: bundler　install -v
+      - pre:
+          - gem uninstall bundler
+          - gem install bundler -v 1.16.6
 
 
       # Download and cache dependencies
