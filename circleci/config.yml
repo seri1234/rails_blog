@@ -22,7 +22,7 @@ jobs:
       # Which version of bundler?
       - run:
           name: Which bundler?
-          command: install bundler -v 1.16.6
+          command: gem install bundler -v 1.16.6
           
 
       # Download and cache dependencies
