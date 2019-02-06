@@ -21,7 +21,7 @@ jobs:
 
           # Which version of bundler?
       - run:
-          name: bundler 1.16.6?
+          name: bundler 1.16.6
           command: bundle -v
 
 
