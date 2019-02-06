@@ -19,17 +19,19 @@ jobs:
     steps:
       - checkout
 
-      - pre:
-          - gem uninstall bundler
-          - gem install bundler -v 1.16.6
-
-
       # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
+
+
+      # Which version of bundler?
+      - run:
+          name: bundler 1.16.6
+          command: bundle -v
+
 
       - run:
           name: install dependencies
