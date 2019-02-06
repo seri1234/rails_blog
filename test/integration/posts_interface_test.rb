@@ -42,9 +42,8 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
     post post_comments_path(Post.first.id) ,params: { post_id: Post.first.id,
                                                       user_id: @user.id,
                                                       comment: { content: "Lorem ipsum" } }
-    assert_not flash.empty?
     get post_path(Post.first.id)   
-    assert "コメント一覧"
+    assert_select 'h2', "コメント一覧"
     assert_match "Lorem ipsum" , response.body
     assert_select  'a', text: @user.name, count: 2 
 
