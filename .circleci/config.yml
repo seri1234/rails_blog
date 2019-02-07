@@ -19,6 +19,12 @@ jobs:
     steps:
       - checkout
 
+      - dependencies:
+        pre:
+          - gem uninstall bundler
+          - gem install bundler -v 1.16.6
+      
+
       # Download and cache dependencies
       - restore_cache:
           keys:
