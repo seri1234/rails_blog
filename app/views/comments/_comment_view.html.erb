@@ -1,4 +1,4 @@
-<h2>コメント一覧</h2>
+<h2>記事へのコメント一覧</h2>
 <% comments.each do |c| %>
   	<%= link_to c.user.name, user_path(c.user_id) %>
     <%= c.content %>

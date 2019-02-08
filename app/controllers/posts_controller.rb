@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   def create                                                                    #/posts(posts_path)にpostアクセス。記事を投稿
     @post = current_user.posts.build(post_params)                               #post_paramsの内容でcurrent_userに紐付いた@postを生成
     if @post.save                                                               #もし@postへのDBの保存が成功したら
-      flash[:success] = "Post created!"                                         #成功フラッシュ
+      flash[:success] = "投稿は成功しました"                                         #成功フラッシュ
       redirect_to root_url                                                      #ルートページにリダイレクト
     else
       @feed_items = []
@@ -21,7 +21,7 @@ class PostsController < ApplicationController
 
   def destroy                                                                   #/posts/id (post_path(post))にdeleteアクセス。記事を削除
     @post.destroy
-    flash[:success] = "post deleted"
+    flash[:success] = "投稿は削除されました"
     redirect_to request.referrer || root_url                                    #Homeページ、プロフィールページ、記事詳細ページどれから削除された場合でも元のページにリダイレクト
   end
 

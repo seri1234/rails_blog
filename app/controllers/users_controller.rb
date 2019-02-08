@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   @user = User.new(user_params)                                                 #user_paramsよりparams@userを作成
     if @user.save                                                               #もし成功すればsaveしてデータベースに保存
       log_in @user
-      flash[:success] = "Welcome to Kohei's blog!"                              #成功フラッシュ
+      flash[:success] = "Kohei's blogへようこそ!"                              #成功フラッシュ
       redirect_to @user                                                         #user_url(@user)にリダイレクト(/users/id)、プロフィールページを表示。
     else                                                                        #もし失敗なら
       render 'new'                                                              #newを再描画
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   def update                                                                    #	/users/idに(update_path(user))patchアクセス。DBのユーザー情報を更新する。
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)                                     #もし更新が成功したら(セキュリティのためstrong parameterを使う)
-      flash[:success] = "Profile updated"
+      flash[:success] = "登録情報の更新に成功しました！"
       redirect_to @user
     else
       render 'edit'
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
   def destroy                                                                   #/users/:id　user_path(user) にdeleteアクセス。特定のユーザーを削除
     User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
+    flash[:success] = "ユーザーを削除しました"
     redirect_to users_url                                                       #ユーザ一覧にアクセス
   end
   

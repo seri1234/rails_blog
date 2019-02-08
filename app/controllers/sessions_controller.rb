@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)     #もしparams[:session][:remember_me]の値が1（つまりチェックボックスがオン）ならユーザーのログインを永続化し、0なら永続的セッションを破棄する。sessions_helperのrememberメソッド
       redirect_back_or user                                                     #フレンドリーフォワーディング機能のURLか/users/idにリダイレクト
     else
-      flash.now[:danger] = 'Invalid email/password combination'                 #もし該当ユーザがいないか、パスワードが正しくなければ、失敗flashをこのページで表示
+      flash.now[:danger] = 'emailとパスワードの組み合わせ正しくありません'                 #もし該当ユーザがいないか、パスワードが正しくなければ、失敗flashをこのページで表示
       render 'new'                                                              #newを再描画
     end
   end

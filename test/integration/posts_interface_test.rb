@@ -43,7 +43,7 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
                                                       user_id: @user.id,
                                                       comment: { content: "Lorem ipsum" } }
     get post_path(Post.first.id)   
-    assert_select 'h2', "コメント一覧"
+    assert_select 'h2', "記事へのコメント一覧"
     assert_match "Lorem ipsum" , response.body
     assert_select  'a', text: @user.name, count: 2 
 
